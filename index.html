@@ -1,0 +1,79 @@
+<html>
+
+<body>
+
+    <div>
+        <form>
+            <label for="ipJson">Input JSON:</label>
+
+            <textarea id="ipJson" name="ipJson" rows="6" cols="100">
+                [
+    {
+      "id": 1,
+      "username": "Gonzales",
+      "video_name": "The Ledergberg Replica Plating Experiment",
+      "action": "Downloaded"
+    },
+    {
+      "id": 2,
+      "username": "Dominique",
+      "video_name": "Atomic Structure of DNA",
+      "action": "Viewed"
+    },
+    {
+        "id": 2,
+        "username": "Mark",
+        "video_name": "Book of Chemistry",
+        "action": "Downloaded"
+    }
+]
+            </textarea>
+
+            <button type="button" onclick="generateHtml()">Generate</button>
+
+
+            <label for="OPhtml">Output HTML:</label>
+
+            <textarea id="OPhtml" name="OPhtml" rows="6" cols="100"> </textarea>
+        </form>
+    </div>
+
+    <script>
+
+
+
+        function structure(id, data) {
+            var basicStruc = `<div class="root" data-id="` + id + `"><span class="username">` + data.username + `</span><span class="video_name">` + data.video_name + `</span><span class="additional_details"><span class="type">` + data.action + `</span></span></div> `
+            return basicStruc;
+        }
+
+        function generateHtml() {
+
+            var IpJson = JSON.parse(document.getElementById("ipJson").value);
+
+            var id = []
+
+            var htmldata = '';
+            var flagError = false;
+
+            IpJson.filter((item) => id.push(item.id));
+            for (var dKey = 0; dKey < id.length; dKey++) {
+                for (var d2Key = 0; d2Key < id.length; d2Key++) {
+                    if (dKey != d2Key && id[dKey] === id[d2Key]) {
+                        this.flagError = true;
+                    }
+                }
+            }
+
+            this.flagError ? alert("Error: ID duplicated") : '';
+
+            for (var data = 0; data < IpJson.length; data++) {
+                htmldata = htmldata + JSON.parse(JSON.stringify(structure(data, IpJson[data])));
+            }
+            document.getElementById("OPhtml").innerHTML = htmldata;
+        }
+    </script>
+
+</body>
+
+</html>
